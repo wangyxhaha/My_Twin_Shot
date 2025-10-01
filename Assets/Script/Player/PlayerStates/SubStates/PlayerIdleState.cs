@@ -25,6 +25,17 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.LogicalUpdate();
 
+        
+
+        if (inputX != 0f)
+        {
+            playerStateMachine.ChangeState(player.playerMoveState);
+        }
+    }
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+
         if (Mathf.Abs(player.currentVelocity.x) <= playerData.stoppingVelocityEpsilon)
         {
             player.SetAccelerationX(0f);
@@ -34,15 +45,5 @@ public class PlayerIdleState : PlayerGroundedState
         {
             player.SetAccelerationX(-(Vector2.right * player.currentVelocity.x).normalized.x * playerData.idleStoppingAcceleration);
         }
-
-        if (inputX != 0f)
-        {
-            playerStateMachine.ChangeState(player.playerMoveState);
-            Debug.Log("change to move");
-        }
-    }
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 }

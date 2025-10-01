@@ -47,4 +47,9 @@ public class PlayerState
     {
         ;
     }
+
+    public virtual void AnimationFinishTrigger()
+    {
+        ;
+    }
 }

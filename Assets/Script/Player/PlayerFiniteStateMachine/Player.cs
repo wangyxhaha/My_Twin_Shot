@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public PlayerJumpState playerJumpState { get; private set; }
     public PlayerInAirState playerInAirState { get; private set; }
     public PlayerLandState playerLandState { get; private set; }
+    public PlayerMoveShootState playerMoveShootState { get; private set; }
     #endregion
     #region Components
     public Animator animator { get; private set; }
@@ -19,7 +20,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb2D { get; private set; }
     #endregion
     #region Other Variables
-    public int FacingDirection;
+    private int FacingDirection;
 
     private Vector2 velocityWorkspace;
     private Vector2 accelerationWorkspace;
@@ -42,6 +43,7 @@ public class Player : MonoBehaviour
         playerJumpState = new PlayerJumpState(this, playerStateMachine, playerData, "inAir");
         playerInAirState = new PlayerInAirState(this, playerStateMachine, playerData, "inAir");
         playerLandState = new PlayerLandState(this, playerStateMachine, playerData, "land");
+        playerMoveShootState = new PlayerMoveShootState(this, playerStateMachine, playerData, "shoot");
     }
 
     private void Start()
@@ -63,7 +65,7 @@ public class Player : MonoBehaviour
     {
         currentVelocity = rb2D.velocity;
         playerStateMachine.currentState.PhysicsUpdate();
-        velocityUpdate();
+        UseAcceleration();
         // Debug.Log(currentAcceleration);
     }
     #endregion
@@ -82,6 +84,8 @@ public class Player : MonoBehaviour
     }
     public void SetAccelerationX(float _acceleration)
     {
+        // Debug.Log("SetAccelerationX");
+        // Debug.Log(_acceleration);
         accelerationWorkspace.Set(_acceleration, currentAcceleration.y);
         currentAcceleration = accelerationWorkspace;
     }
@@ -100,22 +104,26 @@ public class Player : MonoBehaviour
         }
     }
 
-    public bool CheckIfGrounded() => Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
-
+    public bool CheckIfGrounded()
+    {
+        return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
+    }
     #endregion
     #region Other Functions
-    public void Flip()
+    private void Flip()
     {
         FacingDirection *= -1;
         transform.Rotate(0f, 180f, 0f);
     }
-    public void velocityUpdate()
+    private void UseAcceleration()
     {
         velocityWorkspace = currentVelocity + Time.fixedDeltaTime * currentAcceleration;
-        // Debug.Log(velocityWorkspace);
-        // Debug.Log(currentAcceleration);
         rb2D.velocity = velocityWorkspace;
         currentVelocity = velocityWorkspace;
+        accelerationWorkspace.Set(0f, 0f);
+        currentAcceleration = accelerationWorkspace;
     }
+    public void AnimationFinishTrigger() => playerStateMachine.currentState.AnimationFinishTrigger();
+
     #endregion
 }

@@ -9,14 +9,17 @@ public class PlayerData : ScriptableObject
     public float idleStoppingAcceleration = 30f;
     public float stoppingVelocityEpsilon = 0.5f;
     [Header("Move State")]
-    public float movementVelocity = 5f;
     public float maxMovementVelocity = 10f;
     public float movementAcceleration = 30f;
 
+    [Header("In Air State")]
+    public float maxInAirVelocity = 10f;
+    public float inAirAcceleration = 30f;
+
     [Header("Jump State")]
-    public float jumpVelocity = 15f;
+    public float jumpVelocity = 7f;
 
     [Header("Check Variables")]
-    public float groundCheckRadius = 0.3f;
-    public LayerMask whatIsGround;
+    public float groundCheckRadius = 0.5f;
+    public LayerMask whatIsGround = 1<<7;
 }

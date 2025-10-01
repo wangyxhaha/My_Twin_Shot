@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   idleStoppingAcceleration: 30
+  stoppingVelocityEpsilon: 0.5
   movementVelocity: 5
   maxMovementVelocity: 10
   movementAcceleration: 30
-  jumpVelocity: 15
-  groundCheckRadius: 0.3
+  inAirAcceleration: 30
+  maxInAirVelocity: 10
+  jumpVelocity: 7
+  groundCheckRadius: 0.5
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
