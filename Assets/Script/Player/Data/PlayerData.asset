@@ -14,13 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idleStoppingAcceleration: 30
   stoppingVelocityEpsilon: 0.5
-  movementVelocity: 5
   maxMovementVelocity: 10
   movementAcceleration: 30
-  inAirAcceleration: 30
   maxInAirVelocity: 10
+  inAirAcceleration: 30
   jumpVelocity: 7
-  groundCheckRadius: 0.5
+  groundDetectorHalfWidth: 0.9
+  groundDetectorHalfHeight: 0.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
+  whatIsArrowPlatform:
+    serializedVersion: 2
+    m_Bits: 512

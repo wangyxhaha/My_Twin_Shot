@@ -6,7 +6,7 @@ public class PlayerGroundedState : PlayerState
 {
     protected int inputX;
     private bool JumpInput;
-    private bool isGrounded;
+    protected bool isGrounded;
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animeBoolName) : base(player, stateMachine, playerData, animeBoolName)
     {
         ;

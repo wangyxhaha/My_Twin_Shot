@@ -12,7 +12,6 @@ public class Player : MonoBehaviour
     public PlayerJumpState playerJumpState { get; private set; }
     public PlayerInAirState playerInAirState { get; private set; }
     public PlayerLandState playerLandState { get; private set; }
-    public PlayerMoveShootState playerMoveShootState { get; private set; }
     #endregion
     #region Components
     public Animator animator { get; private set; }
@@ -22,17 +21,20 @@ public class Player : MonoBehaviour
     #region Other Variables
     private int FacingDirection;
 
-    private Vector2 velocityWorkspace;
-    private Vector2 accelerationWorkspace;
+    private Vector2 workspace;
     public Vector2 currentVelocity { get; private set; }
     public Vector2 currentAcceleration { get; private set; }
 
     [SerializeField]
     private PlayerData playerData;
+    private int shootLayerIndex;
+    private bool shootInput;
+    [SerializeField]
+    private GameObject arrowPrefab;
     #endregion
     #region Check Transform
     [SerializeField]
-    private Transform groundCheck;
+    private Transform groundDetector;
     #endregion
     #region Unity Callback Functions
     private void Awake()
@@ -43,7 +45,6 @@ public class Player : MonoBehaviour
         playerJumpState = new PlayerJumpState(this, playerStateMachine, playerData, "inAir");
         playerInAirState = new PlayerInAirState(this, playerStateMachine, playerData, "inAir");
         playerLandState = new PlayerLandState(this, playerStateMachine, playerData, "land");
-        playerMoveShootState = new PlayerMoveShootState(this, playerStateMachine, playerData, "shoot");
     }
 
     private void Start()
@@ -51,48 +52,61 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         playerInputHandler = GetComponent<PlayerInputHandler>();
         rb2D = GetComponent<Rigidbody2D>();
-        playerStateMachine.Initialize(playerIdleState);
+
+        shootLayerIndex = animator.GetLayerIndex("Shoot Layer");
+
         FacingDirection = 1;
+        playerStateMachine.Initialize(playerIdleState);
     }
 
     private void Update()
     {
         currentVelocity = rb2D.velocity;
         playerStateMachine.currentState.LogicalUpdate();
+
+        shootInput = playerInputHandler.ShootInput;
+
+        if (shootInput)
+        {
+            playerInputHandler.UseShootInput();
+            StartShoot();
+        }
     }
 
     private void FixedUpdate()
     {
         currentVelocity = rb2D.velocity;
+
+        // CheckIfStandOnArrow();
+
         playerStateMachine.currentState.PhysicsUpdate();
         UseAcceleration();
-        // Debug.Log(currentAcceleration);
     }
     #endregion
     #region Set Functions
     public void SetVelocityX(float _velocity)
     {
-        velocityWorkspace.Set(_velocity, currentVelocity.y);
-        rb2D.velocity = velocityWorkspace;
-        currentVelocity = velocityWorkspace;
+        workspace.Set(_velocity, currentVelocity.y);
+        rb2D.velocity = workspace;
+        currentVelocity = workspace;
     }
     public void SetVelocityY(float _velocity)
     {
-        velocityWorkspace.Set(currentVelocity.x, _velocity);
-        rb2D.velocity = velocityWorkspace;
-        currentVelocity = velocityWorkspace;
+        workspace.Set(currentVelocity.x, _velocity);
+        rb2D.velocity = workspace;
+        currentVelocity = workspace;
     }
     public void SetAccelerationX(float _acceleration)
     {
         // Debug.Log("SetAccelerationX");
         // Debug.Log(_acceleration);
-        accelerationWorkspace.Set(_acceleration, currentAcceleration.y);
-        currentAcceleration = accelerationWorkspace;
+        workspace.Set(_acceleration, currentAcceleration.y);
+        currentAcceleration = workspace;
     }
     public void SetAccelerationY(float _acceleration)
     {
-        accelerationWorkspace.Set(currentAcceleration.x, _acceleration);
-        currentAcceleration = accelerationWorkspace;
+        workspace.Set(currentAcceleration.x, _acceleration);
+        currentAcceleration = workspace;
     }
     #endregion
     #region Check Functions
@@ -106,7 +120,9 @@ public class Player : MonoBehaviour
 
     public bool CheckIfGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, playerData.groundCheckRadius, playerData.whatIsGround);
+        workspace.Set(playerData.groundDetectorHalfWidth, playerData.groundDetectorHalfHeight);
+        // return Physics2D.OverlapBox(groundDetector.position, workspace, 0f, playerData.whatIsGround) || CheckIfStandOnArrow();
+        return Physics2D.OverlapBox(groundDetector.position, workspace, 0f, playerData.whatIsGround | playerData.whatIsArrowPlatform);
     }
     #endregion
     #region Other Functions
@@ -117,13 +133,48 @@ public class Player : MonoBehaviour
     }
     private void UseAcceleration()
     {
-        velocityWorkspace = currentVelocity + Time.fixedDeltaTime * currentAcceleration;
-        rb2D.velocity = velocityWorkspace;
-        currentVelocity = velocityWorkspace;
-        accelerationWorkspace.Set(0f, 0f);
-        currentAcceleration = accelerationWorkspace;
+        workspace = currentVelocity + Time.fixedDeltaTime * currentAcceleration;
+        rb2D.velocity = workspace;
+        currentVelocity = workspace;
+        workspace.Set(0f, 0f);
+        currentAcceleration = workspace;
     }
     public void AnimationFinishTrigger() => playerStateMachine.currentState.AnimationFinishTrigger();
 
+    #endregion
+    #region Shoot Functions
+    public void StartShoot()
+    {
+        Debug.Log("shoot");
+        animator.SetBool("shoot", true);
+        animator.SetLayerWeight(shootLayerIndex, 1f);
+    }
+    public void EndShoot()
+    {
+        animator.SetBool("shoot", false);
+        animator.SetLayerWeight(shootLayerIndex, 0f);
+    }
+    public void ShootArrow()
+    {
+        Debug.Log(rb2D.position);
+        GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
+        if (FacingDirection == -1)
+        {
+            arrow.GetComponent<Transform>().Rotate(0f, 180f, 0f);
+            arrow.GetComponent<Arrow>().SetFacingDirection(-1);
+        }
+        else
+        {
+            arrow.GetComponent<Arrow>().SetFacingDirection(1);
+        }
+        // arrowScript.SetPosition(transform.position.x, transform.position.y);
+        Debug.Log("shoot arrow");
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = CheckIfGrounded() ? Color.green : Color.red;
+        workspace.Set(playerData.groundDetectorHalfWidth, playerData.groundDetectorHalfHeight);
+        Gizmos.DrawWireCube(groundDetector.position, workspace);
+    }
     #endregion
 }

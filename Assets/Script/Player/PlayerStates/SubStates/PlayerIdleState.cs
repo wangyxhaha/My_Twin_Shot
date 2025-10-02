@@ -16,16 +16,17 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Enter();
         // player.SetVelocityX(0f);
+        // Physics.IgnoreLayerCollision(6, 8, false);
     }
     public override void Exit()
     {
         base.Exit();
+        Debug.Log("idle exit");
+        // Physics.IgnoreLayerCollision(6, 8, true);
     }
     public override void LogicalUpdate()
     {
         base.LogicalUpdate();
-
-        
 
         if (inputX != 0f)
         {

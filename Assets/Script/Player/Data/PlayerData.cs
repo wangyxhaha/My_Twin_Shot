@@ -20,6 +20,8 @@ public class PlayerData : ScriptableObject
     public float jumpVelocity = 7f;
 
     [Header("Check Variables")]
-    public float groundCheckRadius = 0.5f;
-    public LayerMask whatIsGround = 1<<7;
+    public float groundDetectorHalfWidth = 0.9f;
+    public float groundDetectorHalfHeight = 0.2f;
+    public LayerMask whatIsGround = 1 << 7;
+    public LayerMask whatIsArrowPlatform = 1 << 9;
 }
