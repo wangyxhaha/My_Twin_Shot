@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
     {
         workspace.Set(playerData.groundDetectorHalfWidth, playerData.groundDetectorHalfHeight);
         // return Physics2D.OverlapBox(groundDetector.position, workspace, 0f, playerData.whatIsGround) || CheckIfStandOnArrow();
-        return Physics2D.OverlapBox(groundDetector.position, workspace, 0f, playerData.whatIsGround | playerData.whatIsArrowPlatform);
+        return Physics2D.OverlapBox(groundDetector.position, workspace, 0f, playerData.whatIsGround | playerData.whatIsPlatform);
     }
     #endregion
     #region Other Functions

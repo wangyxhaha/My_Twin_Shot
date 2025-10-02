@@ -9,24 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1659a8e789c23504489e1bc00454bfa6, type: 3}
-  m_Name: ArrowData
+  m_Script: {fileID: 11500000, guid: 741e07e278b1e8b4382d4266c6898ca8, type: 3}
+  m_Name: GreenSlimeData
   m_EditorClassIdentifier: 
-  startVelocity: 15
-  detectorHalfWidth: 0.5
-  detectorHalfHeight: 0.04
+  CliffDetectorRadius: 0.5
+  WallDetectorRadius: 0.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  whatIsEnemy:
+  whatIsPlatform:
     serializedVersion: 2
-    m_Bits: 1024
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 64
-  noColliderTime: 0.5
-  noGravityTime: 1.5
-  shiningStartTime: 3
-  shiningK: 70
-  lifeTime: 8
-  maxExistTime: 30
+    m_Bits: 512
+  movementVelocity: 4

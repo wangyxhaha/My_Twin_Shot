@@ -6,32 +6,37 @@ using UnityEngine;
 
 public class ArrowPlatform : MonoBehaviour
 {
-    private Transform selfTransform;
     private int FacingDirection = 1;
     public BoxCollider2D boxCollider2D{ get; private set; }
+    public Rigidbody2D rb2D { get; private set; }
     public SpriteRenderer spriteRenderer { get; private set; }
+    public PlatformEffector2D platformEffector2D{ get; private set; }
 
     [SerializeField]
     private ArrowData arrowData;
 
     private float onWallStartTime;
-
+    private bool haveCollider;
     private Vector2 workspace;
     private Color colorWorkspace = Color.white;
 
     void Start()
     {
-        selfTransform = GetComponent<Transform>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+        rb2D = GetComponent<Rigidbody2D>();
+        platformEffector2D = GetComponent<PlatformEffector2D>();
 
         workspace.Set(arrowData.startVelocity * FacingDirection, 0f);
 
         onWallStartTime = Time.time;
+
+        haveCollider = false;
     }
 
     void Update()
     {
+        if (!haveCollider) CheckNoColliderTime();
         CheckIfShouldShine();
         CheckIfShouldDestroy();
     }
@@ -39,7 +44,7 @@ public class ArrowPlatform : MonoBehaviour
     public void SetPosition(float _x, float _y)
     {
         workspace.Set(_x, _y);
-        selfTransform.position = workspace;
+        transform.position = workspace;
     }
 
     public void Flip()
@@ -50,6 +55,16 @@ public class ArrowPlatform : MonoBehaviour
     public void SetFacingDirection(int _d)
     {
         FacingDirection = _d;
+    }
+
+    private void CheckNoColliderTime()
+    {
+        if (Time.time - onWallStartTime > arrowData.noColliderTime)
+        {
+            platformEffector2D.colliderMask = arrowData.whatIsPlayer | arrowData.whatIsEnemy;
+            // platformEffector2D.surfaceArc = 60f;
+            haveCollider = true;
+        }
     }
 
     public void CheckIfShouldDestroy()

@@ -23,5 +23,5 @@ public class PlayerData : ScriptableObject
     public float groundDetectorHalfWidth = 0.9f;
     public float groundDetectorHalfHeight = 0.2f;
     public LayerMask whatIsGround = 1 << 7;
-    public LayerMask whatIsArrowPlatform = 1 << 9;
+    public LayerMask whatIsPlatform = 1 << 9;
 }

@@ -54,6 +54,7 @@ public class Arrow : MonoBehaviour
             Destroy(this.gameObject);
         }
         CheckIfShouldFlip();
+        CheckShotEnemy();
     }
 
     public void SetPosition(float _x, float _y)
@@ -86,6 +87,18 @@ public class Arrow : MonoBehaviour
         {
             Destroy(this.gameObject);
             Debug.Log("destroy arrow");
+        }
+    }
+
+    private void CheckShotEnemy()
+    {
+        workspace.Set(arrowData.detectorHalfWidth, arrowData.detectorHalfHeight);
+        Collider2D result = Physics2D.OverlapBox(detector.position, workspace, 0f, arrowData.whatIsEnemy);
+        Debug.Log(result);
+        if (result != null)
+        {
+            result.gameObject.GetComponent<Enemy>().OnDead(FacingDirection);
+            Destroy(this.gameObject);
         }
     }
 
