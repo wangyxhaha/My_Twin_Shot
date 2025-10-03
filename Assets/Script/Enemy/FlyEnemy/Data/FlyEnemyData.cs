@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "newGreenSlimeData", menuName = "Data/Green Slime Date/Base Data")]
-public class GreenSlimeData : ScriptableObject
+[CreateAssetMenu(fileName = "newFlyEnemyData", menuName = "Data/Fly Enemy Date/Base Data")]
+public class  FlyEnemyData : ScriptableObject
 {
     [Header("Detector")]
-    public float CliffDetectorRadius = 0.5f;
-    public float WallDetectorRadius = 0.5f;
+    public float WallDetectorRadius = 0.2f;
     public LayerMask whatIsGround = 1 << 7;
     public LayerMask whatIsPlatform = 1 << 9;
     public LayerMask whatIsArrow = 1 << 8;

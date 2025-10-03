@@ -23,4 +23,9 @@ public abstract class Enemy : MonoBehaviour
         workspace.Set(_velocity, rb2D.velocity.y);
         rb2D.velocity = workspace;
     }
+    protected void SetVelocityY(float _velocity)
+    {
+        workspace.Set(rb2D.velocity.x, _velocity);
+        rb2D.velocity = workspace;
+    }
 }

@@ -9,11 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 741e07e278b1e8b4382d4266c6898ca8, type: 3}
-  m_Name: GreenSlimeData
+  m_Script: {fileID: 11500000, guid: f60e0a3980f180544a29e3b99b278dd9, type: 3}
+  m_Name: FlyEnemyData
   m_EditorClassIdentifier: 
-  CliffDetectorRadius: 0.5
-  WallDetectorRadius: 0.5
+  WallDetectorRadius: 0.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128

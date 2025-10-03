@@ -55,7 +55,7 @@ public class GreenSlime : Enemy
         isDead = true;
         animator.SetBool("move", false);
         animator.SetBool("dead", true);
-        rb2D.excludeLayers = greenSlimeData.whatIsGround | greenSlimeData.whatIsPlatform;
+        this.gameObject.layer = LayerMask.NameToLayer("Body");
         workspace.Set(greenSlimeData.deadStartVelocityX * _direction * -1, greenSlimeData.deadStartVelocityY);
         rb2D.velocity = workspace;
         Destroy(this.gameObject, 5f);
@@ -63,9 +63,10 @@ public class GreenSlime : Enemy
 
     public void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = CheckCliff() ? Color.green : Color.red;
         workspace.Set(greenSlimeData.CliffDetectorRadius, greenSlimeData.CliffDetectorRadius);
         Gizmos.DrawWireCube(cliffDetector.position, workspace);
+        Gizmos.color = CheckWall() ? Color.green : Color.red;
         workspace.Set(greenSlimeData.WallDetectorRadius, greenSlimeData.WallDetectorRadius);
         Gizmos.DrawWireCube(wallDetector.position, workspace);
     }
