@@ -51,3 +51,7 @@ public Vector2 currentAcceleration { get; private set; }
 - 做了绿色史莱姆的死亡，但是目前还有bug（尸体不会穿过箭）
 
 另外，还有刚固定的箭会把玩家向上挤的bug，尝试解决未果……
+
+### 2025-10-4
+
+摆烂一天

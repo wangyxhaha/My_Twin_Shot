@@ -58,7 +58,7 @@ public class GreenSlime : Enemy
         rb2D.excludeLayers = greenSlimeData.whatIsGround | greenSlimeData.whatIsPlatform;
         workspace.Set(greenSlimeData.deadStartVelocityX * _direction * -1, greenSlimeData.deadStartVelocityY);
         rb2D.velocity = workspace;
-        // Destroy(this.gameObject, 5f);
+        Destroy(this.gameObject, 5f);
     }
 
     public void OnDrawGizmos()
