@@ -94,7 +94,7 @@ public class Arrow : MonoBehaviour
     {
         workspace.Set(arrowData.detectorHalfWidth, arrowData.detectorHalfHeight);
         Collider2D result = Physics2D.OverlapBox(detector.position, workspace, 0f, arrowData.whatIsEnemy);
-        Debug.Log(result);
+        // Debug.Log(result);
         if (result != null)
         {
             result.gameObject.GetComponent<Enemy>().OnDead(FacingDirection);
