@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3777239505902215811}
   - component: {fileID: 7502649620948026879}
-  - component: {fileID: 3656848598592994233}
   - component: {fileID: -4070639918824740747}
+  - component: {fileID: 1656767770751925023}
   m_Layer: 7
   m_Name: SolidBlock
   m_TagString: Ground
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1111054489
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c67dce45021e067408ea4a10897028c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -86,33 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &3656848598592994233
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3437512241365220299}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!61 &-4070639918824740747
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -158,3 +131,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1656767770751925023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3437512241365220299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9797c852c0bb4cb4a9319d7d9da86ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 3222c418a6cebde4fadb3ba825555d1b, type: 3}
+  - {fileID: 21300000, guid: 7a94214bde9f26a45b4358dc90e25922, type: 3}
+  - {fileID: 21300000, guid: d0e54dfc2190aff4397c8c1579f962c0, type: 3}
+  - {fileID: 21300000, guid: de21f55005f805843a05c8087e842744, type: 3}
+  - {fileID: 21300000, guid: f50c94c7b7c8de444a842284fb3561df, type: 3}
+  - {fileID: 21300000, guid: 77e8ee0a4e3fcd8488499a2a0125b242, type: 3}
+  - {fileID: 21300000, guid: 289d6902f2c35d543bfc8650bfff77f4, type: 3}
+  - {fileID: 21300000, guid: fa296445ebadaf946ad7529ecd523669, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4914689518567634583}
   - component: {fileID: 5998341662680680328}
   - component: {fileID: 6538929797156202839}
+  - component: {fileID: -892174455202642317}
   m_Layer: 7
   m_Name: PlatformBlock
   m_TagString: Ground
@@ -73,8 +74,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1178346807
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9bbb071edaef7cd44aa010d0f32e51da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -125,14 +126,14 @@ PlatformEffector2D:
   m_UseColliderMask: 1
   m_ColliderMask:
     serializedVersion: 2
-    m_Bits: 1344
+    m_Bits: 5440
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 1
   m_SurfaceArc: 180
   m_UseSideFriction: 0
   m_UseSideBounce: 0
-  m_SideArc: 1
+  m_SideArc: 0
 --- !u!61 &6538929797156202839
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -164,7 +165,7 @@ BoxCollider2D:
     m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 1
-  m_UsedByComposite: 1
+  m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,3 +179,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-892174455202642317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1981439423388567596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9797c852c0bb4cb4a9319d7d9da86ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprites:
+  - {fileID: 21300000, guid: 1dffa2898cfe8d34a82b72e90276ed35, type: 3}
+  - {fileID: 21300000, guid: 91689cb41c91e2a479a3bf9ad9fcae5d, type: 3}
+  - {fileID: 21300000, guid: 17f2de4144485794bb3c90b52356051a, type: 3}
+  - {fileID: 21300000, guid: e589a6541e157974786b085c3318416b, type: 3}
+  - {fileID: 21300000, guid: 2c6bae6041b49064abe3ae636b2966f1, type: 3}
+  - {fileID: 21300000, guid: 90a54eda4bebd904ca8350fa1afeb769, type: 3}
+  - {fileID: 21300000, guid: 8cc7892cb548ff64188e009921688598, type: 3}
+  - {fileID: 21300000, guid: cc4deb9c0e04fd34eb260e5ee4b79e2c, type: 3}

@@ -26,8 +26,8 @@ public class PlayerMoveState : PlayerGroundedState
 
         player.CheckIfShouldFlip(inputX);
 
-        if (inputX>0 && player.currentVelocity.x < playerData.maxMovementVelocity
-             || inputX<0 && player.currentVelocity.x > -playerData.maxMovementVelocity)
+        if (inputX>0 && player.currentVelocity.x < player.maxMovementVelocity
+             || inputX<0 && player.currentVelocity.x > -player.maxMovementVelocity)
         {
             player.SetAccelerationX(playerData.movementAcceleration * inputX);
         }

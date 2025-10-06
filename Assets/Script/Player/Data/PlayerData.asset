@@ -19,11 +19,30 @@ MonoBehaviour:
   maxInAirVelocity: 10
   inAirAcceleration: 30
   jumpVelocity: 7
-  groundDetectorHalfWidth: 0.9
-  groundDetectorHalfHeight: 0.2
+  groundDetectorWidth: 0.9
+  groundDetectorHeight: 0.2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 128
-  whatIsArrowPlatform:
+  whatIsPlatform:
     serializedVersion: 2
     m_Bits: 512
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 1024
+  whatIsBody:
+    serializedVersion: 2
+    m_Bits: 2048
+  whatIsItem:
+    serializedVersion: 2
+    m_Bits: 4096
+  whatIsTrap:
+    serializedVersion: 2
+    m_Bits: 16384
+  deadVelocityX: -4
+  deadVelocityY: 8
+  maxLife: 3
+  enmeyDetectorWidth: 1
+  enmeyDetectorHeight: 1.6
+  itemDetectorWidth: 1
+  itemDetectorHeight: 1.6

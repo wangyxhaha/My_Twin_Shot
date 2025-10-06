@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 69df21435249392458de2d77b8f1e84b
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 32
+  forceTextureCase: 0
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - FFF Daylight Bold
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 04760184dbf75334b93e44bb189e6013, type: 3}
+  customCharacters: 
+  fontRenderingMode: 2
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

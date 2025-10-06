@@ -21,11 +21,15 @@ public class FlyEnemy : Enemy
         FacingDirection = 1;
 
         arrowFilter.SetLayerMask(flyEnemyData.whatIsArrow);
-        arrowFilter.useLayerMask=true;
+        arrowFilter.useLayerMask = true;
+        
+        InitializeFakeFigure();
     }
 
-    void Update()
+    public override void FixedUpdate()
     {
+        base.FixedUpdate();
+
         if (isDead) return;
         if (!CheckWall())
         {
@@ -52,6 +56,8 @@ public class FlyEnemy : Enemy
         workspace.Set(flyEnemyData.deadStartVelocityX * _direction * -1, flyEnemyData.deadStartVelocityY);
         rb2D.velocity = workspace;
         rb2D.gravityScale = 1f;
+        EnableInfinitySpace = false;
+        DropGoods();
         Destroy(this.gameObject, 5f);
     }
 

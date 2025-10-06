@@ -43,8 +43,8 @@ public class PlayerInAirState : PlayerState
 
             player.animator.SetFloat("velocityY",player.currentVelocity.y > 0 ? 1f : -1f);
 
-            if ((inputX > 0 && player.currentVelocity.x < playerData.maxInAirVelocity)
-             || (inputX < 0 && player.currentVelocity.x > -playerData.maxInAirVelocity))
+            if ((inputX > 0 && player.currentVelocity.x < player.maxInAirVelocity)
+             || (inputX < 0 && player.currentVelocity.x > -player.maxInAirVelocity))
             {
                 player.SetAccelerationX(playerData.inAirAcceleration * inputX);
             }

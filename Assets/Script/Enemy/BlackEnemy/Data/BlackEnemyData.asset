@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DestinationDetectorRadius: 0.2
   DestinationRadius: 7
+  minDestinationRadius: 3
   CliffDetectorRadius: 0.5
   WallDetectorRadius: 0.3
   GroundDetectorHalfWidth: 0.5
   GroundDetectorHalfHeight: 0.2
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 16512
   whatIsPlatform:
     serializedVersion: 2
     m_Bits: 512
@@ -33,5 +34,3 @@ MonoBehaviour:
   movementVelocity: 4
   deadStartVelocityX: -4
   deadStartVelocityY: 8
-  gravity: -9.8
-  jumpV0: 15

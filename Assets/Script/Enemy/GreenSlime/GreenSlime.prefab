@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 501994553524698041}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.15, y: -0.4, z: 0}
+  m_LocalPosition: {x: 1.204, y: -0.283, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -138,8 +138,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1340882633
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0c9dae7a5f363bd47ac177f87952febf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -247,6 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4071988e77be47449bfff5b9fc7f220a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FakeFigure: {fileID: 5561059441568982476, guid: 5ff27ed35c935fe4fb18e4c502e9e0b0, type: 3}
+  goods:
+  - {fileID: 4880510830111775220, guid: c07f9fcb41943e048a45cb0b8cce04f1, type: 3}
+  - {fileID: 4880510830111775220, guid: a1c6534151fc07c46b922cf69814ddc3, type: 3}
   cliffDetector: {fileID: 4074559261364395474}
   wallDetector: {fileID: 7465708351012675228}
   greenSlimeData: {fileID: 11400000, guid: 583ef539e2c0a594fa2dd93e2f5ea8ba, type: 2}

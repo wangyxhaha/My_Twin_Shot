@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
-public class ArrowPlatform : MonoBehaviour
+public class ArrowPlatform : Entity
 {
     private int FacingDirection = 1;
     public BoxCollider2D boxCollider2D{ get; private set; }
@@ -17,7 +16,6 @@ public class ArrowPlatform : MonoBehaviour
 
     private float onWallStartTime;
     private bool haveCollider;
-    private Vector2 workspace;
     private Color colorWorkspace = Color.white;
 
     void Start()
@@ -25,17 +23,20 @@ public class ArrowPlatform : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
-        platformEffector2D = GetComponent<PlatformEffector2D>();
+        platformEffector2D = transform.GetChild(0).GetComponent<PlatformEffector2D>();
 
         workspace.Set(arrowData.startVelocity * FacingDirection, 0f);
 
         onWallStartTime = Time.time;
 
         haveCollider = false;
+
+        InitializeFakeFigure();
     }
 
-    void Update()
+    public void Update()
     {
+
         if (!haveCollider) CheckNoColliderTime();
         CheckIfShouldShine();
         CheckIfShouldDestroy();

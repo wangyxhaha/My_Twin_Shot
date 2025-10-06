@@ -24,11 +24,15 @@ public class GreenSlime : Enemy
         FacingDirection = 1;
 
         arrowFilter.SetLayerMask(greenSlimeData.whatIsArrow);
-        arrowFilter.useLayerMask=true;
+        arrowFilter.useLayerMask = true;
+        
+        InitializeFakeFigure();
     }
 
-    void Update()
+    public override void FixedUpdate()
     {
+        base.FixedUpdate();
+
         if (isDead) return;
         if (CheckCliff() && !CheckWall())
         {
@@ -58,6 +62,8 @@ public class GreenSlime : Enemy
         this.gameObject.layer = LayerMask.NameToLayer("Body");
         workspace.Set(greenSlimeData.deadStartVelocityX * _direction * -1, greenSlimeData.deadStartVelocityY);
         rb2D.velocity = workspace;
+        EnableInfinitySpace = false;
+        DropGoods();
         Destroy(this.gameObject, 5f);
     }
 

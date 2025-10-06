@@ -9,7 +9,7 @@ public class ArrowData : ScriptableObject
     public float startVelocity = 15f;
 
     [Header("Detector")]
-    public float detectorHalfWidth = 0.5f;
+    public float detectorHalfWidth = 0.3f;
     public float detectorHalfHeight = 0.04f;
     public LayerMask whatIsGround = 1 << 7;
     public LayerMask whatIsEnemy = 1 << 10;

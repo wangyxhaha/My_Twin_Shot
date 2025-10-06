@@ -14,6 +14,7 @@ public class PlayerInputHandler : MonoBehaviour
     private float inputHoldTime = 0.2f;
     private float jumpInputStartTime;
     private float shootInputStartTime;
+    private bool useInput = true;
 
     public void Update()
     {
@@ -21,12 +22,14 @@ public class PlayerInputHandler : MonoBehaviour
     }
     public void OnMoveInput(InputAction.CallbackContext context)
     {
+        if (!useInput) return;
         RawMovementInput = context.ReadValue<Vector2>();
         NormInputX = (int)(RawMovementInput * Vector2.right).normalized.x;
         NormInputY = (int)(RawMovementInput * Vector2.up).normalized.y;
     }
     public void OnJumpInput(InputAction.CallbackContext context)
     {
+        if (!useInput) return;
         if (context.started)
         {
             JumpInput = true;
@@ -35,6 +38,7 @@ public class PlayerInputHandler : MonoBehaviour
     }
     public void OnShootInput(InputAction.CallbackContext context)
     {
+        if (!useInput) return;
         if (context.started)
         {
             ShootInput = true;
@@ -56,5 +60,9 @@ public class PlayerInputHandler : MonoBehaviour
         {
             ShootInput = false;
         }
+    }
+    public void SetUseInput(bool _a)
+    {
+        useInput = _a;
     }
 }

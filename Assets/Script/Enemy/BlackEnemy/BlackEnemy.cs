@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.U2D.IK;
@@ -25,13 +27,13 @@ public class BlackEnemySlime : Enemy
         jump
     }
     private STATE state;
-    private STATE[] decisionPool = new STATE[] { STATE.jump, STATE.jump, STATE.jump, STATE.jump, STATE.move };
     private STATE RandomDecision()
     {
-        return decisionPool[Random.Range(0, decisionPool.Length)];
+        return UnityEngine.Random.Range(0.0f, 1.0f) > 0.01f ? STATE.move : STATE.jump;
     }
     private bool isJumping;
     private int jumpingState;
+    private float jumpStartTime;
     private Vector2Int testDestination;
     private Vector2 testPosition;
     private Vector2 testV0;
@@ -52,17 +54,21 @@ public class BlackEnemySlime : Enemy
         state = STATE.move;
 
         isJumping = false;
+
+        InitializeFakeFigure();
     }
 
-    void Update()
+    public override void FixedUpdate()
     {
+        base.FixedUpdate();
+        
         if (isDead) return;
         if (isJumping)
         {
             switch (jumpingState)
             {
                 case 1:
-                    if (!CheckGround()) jumpingState = 2;
+                    if (!CheckGround() || Time.time - jumpStartTime > 0.3f) jumpingState = 2;
                     break;
                 case 2:
                     if (CheckGround())
@@ -77,15 +83,28 @@ public class BlackEnemySlime : Enemy
         }
         if (state == STATE.move)
         {
+            if (!CheckGround()) return;
             if (CheckCliff() && !CheckWall())
             {
                 SetVelocityX(blackEnemyData.movementVelocity * FacingDirection);
             }
             else
             {
-                if (CheckWall()) Flip();
-                state = RandomDecision();
+                if (CheckWall())
+                {
+                    Flip();
+                }
+                else if (UnityEngine.Random.Range(0, 2) == 0)
+                {
+                    Flip();
+                }
+                else
+                {
+                    state = STATE.move;
+                    return;
+                }
             }
+            state = RandomDecision();
         }
         else if (state == STATE.jump)
         {
@@ -93,6 +112,7 @@ public class BlackEnemySlime : Enemy
             Vector2? destination = FindJumpDestination();
             if (destination == null)
             {
+                if (!CheckCliff()) Flip();
                 Debug.Log("no destination");
                 state = STATE.move;
                 return;
@@ -103,8 +123,7 @@ public class BlackEnemySlime : Enemy
                 state = STATE.move;
                 return;
             }
-            Debug.Log(testV0);
-            Debug.Log(rb2D.velocity);
+            jumpStartTime = Time.time;
         }
     }
 
@@ -113,22 +132,43 @@ public class BlackEnemySlime : Enemy
         float deltaX = _destination.x - transform.position.x;
         float deltaXsquare = deltaX * deltaX;
         float deltaY = _destination.y - transform.position.y;
-        float V0square = blackEnemyData.jumpV0 * blackEnemyData.jumpV0;
-        float A = blackEnemyData.gravity * deltaXsquare / (2f * V0square);
-        float B = deltaX;
-        float C = blackEnemyData.gravity * deltaXsquare / (2f * V0square) + deltaY;
-        float D = B * B - 4f * A * C;
-        if (D < 0) return false;
+        float deltaYsquare = deltaY * deltaY;
+        float gravity = -Physics2D.gravity.y * rb2D.gravityScale;
+        // 固定初速度大小求角度
+        // float V0square = blackEnemyData.jumpV0 * blackEnemyData.jumpV0;
+        // float A = blackEnemyData.gravity * deltaXsquare / (2f * V0square);
+        // float B = deltaX;
+        // float C = blackEnemyData.gravity * deltaXsquare / (2f * V0square) + deltaY;
+        // float D = B * B - 4f * A * C;
+        // if (D < 0) return false;
+        // isJumping = true;
+        // jumpingState = 1;
+        // float sqrtD = Mathf.Sqrt(D);
+        // float[] tanTheta = new float[2] { (-B + sqrtD) / (2f * A), (-B - sqrtD) / (2f * A) };
+        // // int choice = Mathf.Abs(D) < 0.01f ? 0 : Random.Range(0, 2);
+        // int choice = 0;
+        // float theta = Mathf.Atan(tanTheta[choice]);
+        // Debug.Log(theta / Mathf.PI);
+        // workspace.Set(blackEnemyData.jumpV0 * Mathf.Cos(theta) * FacingDirection, blackEnemyData.jumpV0 * Mathf.Sin(theta) * FacingDirection);
+        // rb2D.velocity = workspace;
+        // testV0 = workspace;
+        // return true;
+
+        // 角度只有一个解，即使用正好到达目标位置的最小速度
+        if (deltaX == 0f) return false;
+        float sqrtDeltaXSquareAddDeltaYSquare = Mathf.Sqrt(deltaXsquare + deltaYsquare);
+        float V0 = Mathf.Sqrt(gravity * (sqrtDeltaXSquareAddDeltaYSquare + deltaY));
+        float theta = Mathf.Atan((deltaY + sqrtDeltaXSquareAddDeltaYSquare) / deltaX);
+        Debug.Log(sqrtDeltaXSquareAddDeltaYSquare);
+        Debug.Log(deltaY);
+        Debug.Log(V0);
+        Debug.Log(theta);
+        workspace.Set(V0 * Mathf.Cos(theta) * FacingDirection, V0 * Mathf.Sin(theta) * FacingDirection);
+        Debug.Log(workspace);
+        rb2D.velocity = workspace;
+        
         isJumping = true;
         jumpingState = 1;
-        float sqrtD = Mathf.Sqrt(D);
-        float[] tanTheta = new float[2] { (-B + sqrtD) / (2f * A), (-B - sqrtD) / (2f * A) };
-        int choice = Mathf.Abs(D) < 0.01f ? 0 : Random.Range(0, 2);
-        // int choice = 0;
-        float theta = Mathf.Atan(tanTheta[choice]);
-        workspace.Set(blackEnemyData.jumpV0 * Mathf.Cos(theta) * FacingDirection, blackEnemyData.jumpV0 * Mathf.Sin(theta) * FacingDirection);
-        rb2D.velocity = workspace;
-        testV0 = workspace;
         return true;
     }
     private bool CheckCliff()
@@ -196,10 +236,11 @@ public class BlackEnemySlime : Enemy
             {
                 for (int j = d - 1; j > r; j--)
                 {
-                    if (flag[j, i] && map[j, i-1])
+                    if (Math.Abs(j - r) + Math.Abs(i - r) <= blackEnemyData.minDestinationRadius) continue;
+                    if (flag[j, i] && map[j, i - 1])
                     {
                         workspace.Set(transform.position.x - r + j, transform.position.y - r + i);
-                        testDestination = new Vector2Int(j,i);
+                        testDestination = new Vector2Int(j, i);
                         testPosition = transform.position;
                         return workspace;
                     }
@@ -209,6 +250,7 @@ public class BlackEnemySlime : Enemy
             {
                 for (int j = d - 1; j > r; j--)
                 {
+                    if (Math.Abs(j - r) + Math.Abs(i - r) <= blackEnemyData.minDestinationRadius) continue;
                     if (flag[j, i] && map[j, i-1])
                     {
                         workspace.Set(transform.position.x - r + j, transform.position.y - r + i);
@@ -225,6 +267,7 @@ public class BlackEnemySlime : Enemy
             {
                 for (int j = 0; j < r; j++)
                 {
+                    if (Math.Abs(j - r) + Math.Abs(i - r) <= blackEnemyData.minDestinationRadius) continue;
                     if (flag[j, i] && map[j, i-1])
                     {
                         workspace.Set(transform.position.x - r + j, transform.position.y - r + i);
@@ -238,6 +281,7 @@ public class BlackEnemySlime : Enemy
             {
                 for (int j = 0; j < r; j++)
                 {
+                    if (Math.Abs(j - r) + Math.Abs(i - r) <= blackEnemyData.minDestinationRadius) continue;
                     if (flag[j, i] && map[j, i-1])
                     {
                         workspace.Set(transform.position.x - r + j, transform.position.y - r + i);
@@ -259,6 +303,11 @@ public class BlackEnemySlime : Enemy
         this.gameObject.layer = LayerMask.NameToLayer("Body");
         workspace.Set(blackEnemyData.deadStartVelocityX * _direction * -1, blackEnemyData.deadStartVelocityY);
         rb2D.velocity = workspace;
+        rb2D.constraints = RigidbodyConstraints2D.None;
+        Debug.Log(rb2D.constraints);
+        rb2D.angularVelocity = 90f * _direction * -1;
+        EnableInfinitySpace = false;
+        DropGoods();
         Destroy(this.gameObject, 5f);
     }
 

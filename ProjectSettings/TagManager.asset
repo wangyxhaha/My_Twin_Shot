@@ -20,9 +20,9 @@ TagManager:
   - Platform
   - Enemy
   - Body
-  - 
-  - 
-  - 
+  - Item
+  - BrokenGround
+  - Trap
   - 
   - 
   - 
@@ -41,6 +41,33 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3282551227
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Platform
+    uniqueID: 3116620489
+    locked: 0
+  - name: Ground
+    uniqueID: 1111054489
+    locked: 0
+  - name: Enemy
+    uniqueID: 1340882633
+    locked: 0
+  - name: Player
+    uniqueID: 2151347781
+    locked: 0
+  - name: Body
+    uniqueID: 1471361859
+    locked: 0
+  - name: Item
+    uniqueID: 3541324511
+    locked: 0
+  - name: ArrowShine
+    uniqueID: 3612203465
+    locked: 0
+  - name: Arrow
+    uniqueID: 2635399063
     locked: 0

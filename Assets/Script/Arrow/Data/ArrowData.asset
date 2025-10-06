@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ArrowData
   m_EditorClassIdentifier: 
   startVelocity: 15
-  detectorHalfWidth: 0.5
+  detectorHalfWidth: 0.3
   detectorHalfHeight: 0.04
   whatIsGround:
     serializedVersion: 2

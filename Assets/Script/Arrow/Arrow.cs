@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class Arrow : Entity
 {
     [SerializeField]
     private Transform detector;
@@ -18,8 +17,6 @@ public class Arrow : MonoBehaviour
     [SerializeField]
     private ArrowData arrowData;
     private float startTime;
-
-    private Vector2 workspace;
 
     void Awake()
     {
@@ -35,18 +32,24 @@ public class Arrow : MonoBehaviour
         rb2D.velocity = workspace;
 
         startTime = Time.time;
+
+        InitializeFakeFigure();
     }
 
-    void Update()
+    public void Update()
     {
+        // base.Update();
+        Rotate();
         CheckExistTime();
     }
 
-    void FixedUpdate()
+    public override void FixedUpdate()
     {
+        base.FixedUpdate();
+        
         if (DetectorCheck())
         {
-            GameObject newArrowPlatform = Instantiate(arrowPlatformPrefab, transform.position, Quaternion.identity);
+            GameObject newArrowPlatform = Instantiate(arrowPlatformPrefab, detector.position, Quaternion.identity);
             if (rb2D.velocity.x < 0)
             {
                 newArrowPlatform.GetComponent<ArrowPlatform>().Flip();
@@ -57,6 +60,10 @@ public class Arrow : MonoBehaviour
         CheckShotEnemy();
     }
 
+    private void Rotate()
+    {
+        transform.rotation = Quaternion.Euler(0f, FacingDirection == 1 ? 0f : 180f,rb2D.velocity.y);
+    }
     public void SetPosition(float _x, float _y)
     {
         workspace.Set(_x, _y);

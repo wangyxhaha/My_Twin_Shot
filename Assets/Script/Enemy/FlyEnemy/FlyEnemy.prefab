@@ -106,8 +106,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1340882633
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: dd54e82ab6f7d4e459fe35f5fc51766e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -215,5 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bb98a71e6d800746bd4599cecd1896b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FakeFigure: {fileID: 5561059441568982476, guid: 5ff27ed35c935fe4fb18e4c502e9e0b0, type: 3}
+  goods:
+  - {fileID: 4880510830111775220, guid: c07f9fcb41943e048a45cb0b8cce04f1, type: 3}
+  - {fileID: 4880510830111775220, guid: a1c6534151fc07c46b922cf69814ddc3, type: 3}
   wallDetector: {fileID: 7964821341341710816}
   flyEnemyData: {fileID: 11400000, guid: 3cedfeb7a15547144aa13671d5d5296c, type: 2}
