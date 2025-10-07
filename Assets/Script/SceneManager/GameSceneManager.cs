@@ -37,6 +37,8 @@ public class GameSceneManager : MonoBehaviour
         currentScene = menuScene;
 
         GameEventManager.Instance.CallMainMenuInvoke();
+        GameEventManager.Instance.DisableEvaluationUIInputInvoke();
+        GameEventManager.Instance.DisablePauseUIInputInvoke();
     }
 
     private void LoadBasicScene()

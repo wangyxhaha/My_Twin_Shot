@@ -5,21 +5,11 @@ using UnityEngine.InputSystem;
 
 public class EvaluationUIController : UIController
 {
-    private PlayerInput UIInput;
-    
+
     public override void Awake()
     {
         base.Awake();
-        UIInput = GetComponent<PlayerInput>();
     }
-    public void Start()
-    {
-        GameEventManager.Instance.EnableUIInput += EnableUIInput;
-        GameEventManager.Instance.DisableUIInput += DisableUIInput;
-        // GameEventManager.Instance.CallMainMenu += Resume;
-    }
-    private void EnableUIInput() => UIInput.enabled = true;
-    private void DisableUIInput() => UIInput.enabled = false;
 
     public void OnCalled(InputAction.CallbackContext context)
     {
@@ -34,8 +24,6 @@ public class EvaluationUIController : UIController
 
         if (_b)
         {
-            GameEventManager.Instance.DisablePlayerInputInvoke();
-            GameEventManager.Instance.EnableUIInputInvoke();
             for (int i = 0; i < childrenUI.Length; i++)
             {
                 if (childrenUI[i].name == "LevelScore")
@@ -45,10 +33,16 @@ public class EvaluationUIController : UIController
                 }
             }
         }
-        else
+    }
+    
+    void Update()
+    {
+        if (isActive)
         {
-            GameEventManager.Instance.DisableUIInputInvoke();
-            GameEventManager.Instance.EnablePlayerInputInvoke();
+            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            {
+                GameEventManager.Instance.CallNextLevelInvoke();
+            }
         }
     }
 }

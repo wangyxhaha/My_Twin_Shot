@@ -5,7 +5,7 @@ using UnityEngine;
 public class UIController : MonoBehaviour
 {
     protected GameObject[] childrenUI;
-
+    protected bool isActive;
     public virtual void Awake()
     {
         childrenUI = new GameObject[transform.childCount];
@@ -14,10 +14,13 @@ public class UIController : MonoBehaviour
             childrenUI[i] = transform.GetChild(i).gameObject;
             // Debug.Log($"start UI controller, UI:{childrenUI[i]}");
         }
+
+        isActive = true;
     }
 
     public virtual void SetActive(bool _b)
     {
+        isActive = _b;
         // Debug.Log
         for (int i = 0; i < childrenUI.Length; i++)
         {
