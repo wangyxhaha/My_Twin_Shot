@@ -64,4 +64,7 @@ public class GameEventManager : MonoBehaviour
 
     public event Action PlayBuffAudio;
     public void PlayBuffAudioInvoke() => PlayBuffAudio?.Invoke();
+
+    public event Action CallNextLevel;
+    public void CallNextLevelInvoke() => CallNextLevel?.Invoke();
 }

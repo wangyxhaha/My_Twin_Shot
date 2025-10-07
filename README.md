@@ -129,3 +129,9 @@ public Vector2 currentAcceleration { get; private set; }
 
 制作的内容：
 - 加了音效
+
+### 2025-10-7 23:54
+
+能下一关了
+
+先提交再说

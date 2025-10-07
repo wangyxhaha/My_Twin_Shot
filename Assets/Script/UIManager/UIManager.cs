@@ -56,5 +56,9 @@ public class UIManager : MonoBehaviour
             DeactivateAllUI();
             InGameUI.SetActive(true);
         };
+        GameEventManager.Instance.CallNextLevel += () =>
+        {
+            DeactivateAllUI();
+        };
     }
 }

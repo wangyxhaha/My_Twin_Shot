@@ -48,6 +48,13 @@ public class GameSceneManager : MonoBehaviour
     {
         GameEventManager.Instance.CallLevel += CallLevel;
         GameEventManager.Instance.CallMainMenu += CallMainMenu;
+        GameEventManager.Instance.CallNextLevel += CallNextLevel;
+    }
+
+    private void CallNextLevel()
+    {
+        Debug.Log("next level");
+        GameEventManager.Instance.CallLevelInvoke((int)CurrentLevel + 1);
     }
 
     private void CallLevel(int _level)

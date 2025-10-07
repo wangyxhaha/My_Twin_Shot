@@ -37,7 +37,7 @@ public class PauseUIController : UIController
         }
         else
         {
-            Debug.Log(GameEventManager.Instance);
+            // Debug.Log(GameEventManager.Instance);
             GameEventManager.Instance.DisableUIInputInvoke();
             GameEventManager.Instance.EnablePlayerInputInvoke();
             Resume();
