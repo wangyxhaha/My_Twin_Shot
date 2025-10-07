@@ -7,6 +7,9 @@ public abstract class Enemy : Entity
     public Animator animator { get; protected set; }
     public Rigidbody2D rb2D { get; protected set; }
     public CapsuleCollider2D capsuleCollider2D { get; protected set; }
+    public AudioSource audioSource { get; private set; }
+    [SerializeField]
+    private AudioClip DeadAudio;
     private Recorder recorder;
     protected int FacingDirection;
     protected ContactFilter2D arrowFilter;
@@ -24,6 +27,7 @@ public abstract class Enemy : Entity
     {
         GameEventManager.Instance.KillAllEnemy += foo;
 
+        audioSource = GetComponent<AudioSource>();
         recorder = GameObject.Find("Recorder").GetComponent<Recorder>();
         recorder.CurrentEnemyCount++;
     }
@@ -41,7 +45,10 @@ public abstract class Enemy : Entity
         transform.Rotate(0f, 180f, 0f);
     }
 
-    public abstract void OnDead(int _direction);
+    public virtual void OnDead(int _direction)
+    {
+        audioSource.PlayOneShot(DeadAudio);
+    }
     protected void SetVelocityX(float _velocity)
     {
         workspace.Set(_velocity, rb2D.velocity.y);

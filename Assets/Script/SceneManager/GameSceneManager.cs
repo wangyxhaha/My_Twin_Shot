@@ -5,13 +5,27 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : MonoBehaviour
 {
+    public static GameSceneManager Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     public int? CurrentLevel { get; private set; }
     private Scene menuScene;
     private Scene currentScene;
 
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
 
         SubscribeEvent();
 

@@ -13,6 +13,7 @@ public class Faster : Item
     }
     public override void PickUp(Player _player)
     {
+        GameEventManager.Instance.PlayBuffAudioInvoke();
         _player.ClearBuff();
         _player.isFasterBuff = true;
         _player.StartBuffTimer();

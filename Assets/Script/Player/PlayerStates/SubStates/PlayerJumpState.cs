@@ -14,5 +14,7 @@ public class PlayerJumpState : PlayerAbilityState
 
         player.SetVelocityY(playerData.jumpVelocity);
         isAbilityDone = true;
+
+        player.audioSource.PlayOneShot(player.JumpAudio);
     }
 }

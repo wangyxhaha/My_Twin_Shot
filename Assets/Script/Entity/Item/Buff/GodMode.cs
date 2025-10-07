@@ -13,6 +13,7 @@ public class GodMode : Item
     }
     public override void PickUp(Player _player)
     {
+        GameEventManager.Instance.PlayBuffAudioInvoke();
         _player.ClearBuff();
         _player.isGodBuff = true;
         

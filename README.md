@@ -120,3 +120,12 @@ public Vector2 currentAcceleration { get; private set; }
 - bug
 
 总之先传一次
+
+### 2025-10-7 23:30
+
+还有半个小时不到的时间
+
+先把加了音效的传上去吧
+
+制作的内容：
+- 加了音效

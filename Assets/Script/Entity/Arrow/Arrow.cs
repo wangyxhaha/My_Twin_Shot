@@ -13,6 +13,7 @@ public class Arrow : Entity
     public Rigidbody2D rb2D { get; private set; }
     public BoxCollider2D boxCollider2D{ get; private set; }
     public SpriteRenderer spriteRenderer { get; private set; }
+    // public AudioSource audioSource { get; private set; }
 
     [SerializeField]
     private ArrowData arrowData;

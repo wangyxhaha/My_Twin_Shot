@@ -22,6 +22,7 @@ public class Coin : Item
     }
     public override void PickUp(Player _player)
     {
+        GameEventManager.Instance.PlayCoinAudioInvoke();
         _player.score += points;
         recorder.TotalScore += points;
         Destroy(this.gameObject);

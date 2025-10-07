@@ -10,6 +10,7 @@ public class ArrowPlatform : Entity
     public Rigidbody2D rb2D { get; private set; }
     public SpriteRenderer spriteRenderer { get; private set; }
     public PlatformEffector2D platformEffector2D{ get; private set; }
+    public AudioSource audioSource{ get; private set; }
 
     [SerializeField]
     private ArrowData arrowData;
@@ -18,12 +19,16 @@ public class ArrowPlatform : Entity
     private bool haveCollider;
     private Color colorWorkspace = Color.white;
 
+    [SerializeField]
+    private AudioClip AttachedAudio;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         rb2D = GetComponent<Rigidbody2D>();
         platformEffector2D = transform.GetChild(0).GetComponent<PlatformEffector2D>();
+        audioSource = GetComponent<AudioSource>();
 
         workspace.Set(arrowData.startVelocity * FacingDirection, 0f);
 
@@ -32,8 +37,10 @@ public class ArrowPlatform : Entity
         haveCollider = false;
 
         InitializeFakeFigure();
-        
+
         FakeFigureUpdate();
+
+        audioSource.PlayOneShot(AttachedAudio);
     }
 
     public void Update()

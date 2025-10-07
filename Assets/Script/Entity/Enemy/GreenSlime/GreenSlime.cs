@@ -57,6 +57,7 @@ public class GreenSlime : Enemy
 
     public override void OnDead(int _direction)
     {
+        base.OnDead(_direction);
         isDead = true;
         animator.SetBool("move", false);
         animator.SetBool("dead", true);

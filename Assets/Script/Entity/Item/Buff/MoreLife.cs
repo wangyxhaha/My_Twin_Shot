@@ -14,6 +14,7 @@ public class MoreLife : Item
     public override void PickUp(Player _player)
     {
         // _player.ClearBuff();
+        GameEventManager.Instance.PlayBuffAudioInvoke();
         _player.LifePlusPlus();
         Debug.Log("More Life!");
         

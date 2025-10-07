@@ -58,4 +58,10 @@ public class GameEventManager : MonoBehaviour
 
     public event Action DisableUIInput;
     public void DisableUIInputInvoke() => DisableUIInput?.Invoke();
+
+    public event Action PlayCoinAudio;
+    public void PlayCoinAudioInvoke() => PlayCoinAudio?.Invoke();
+
+    public event Action PlayBuffAudio;
+    public void PlayBuffAudioInvoke() => PlayBuffAudio?.Invoke();
 }

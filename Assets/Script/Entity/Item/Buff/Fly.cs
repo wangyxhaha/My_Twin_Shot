@@ -13,6 +13,8 @@ public class Fly : Item
     }
     public override void PickUp(Player _player)
     {
+        // audioSource.PlayOneShot(PickUpAudio);
+        GameEventManager.Instance.PlayBuffAudioInvoke();
         _player.ClearBuff();
         _player.isFlyBuff = true;
 

@@ -24,6 +24,7 @@ public class Player : Entity
     public SpriteRenderer spriteRenderer { get; private set; }
     public CapsuleCollider2D capsuleCollider2D { get; private set; }
     public PlayerInput playerInput { get; private set; }
+    public AudioSource audioSource { get; private set; }
     #endregion
     #region Other Variables
     private int FacingDirection;
@@ -71,6 +72,16 @@ public class Player : Entity
     private float fasterVelocityScale = 1.5f;
     public float maxMovementVelocity;
     public float maxInAirVelocity;
+    [SerializeField]
+    private AudioClip ShootAudio;
+    [SerializeField]
+    private AudioClip HurtAudio;
+    [SerializeField]
+    public AudioClip JumpAudio;
+    [SerializeField]
+    private AudioClip CoinAudio;
+    [SerializeField]
+    private AudioClip BuffAudio;
     #endregion
     #region Check Transform
     [SerializeField]
@@ -95,6 +106,7 @@ public class Player : Entity
         spriteRenderer = GetComponent<SpriteRenderer>();
         capsuleCollider2D = GetComponent<CapsuleCollider2D>();
         playerInput = GetComponent<PlayerInput>();
+        audioSource = GetComponent<AudioSource>();
 
         shootLayerIndex = animator.GetLayerIndex("Shoot Layer");
         deadLayerIndex = animator.GetLayerIndex("Dead Layer");
@@ -251,7 +263,8 @@ public class Player : Entity
     }
     public void ShootArrow()
     {
-        Debug.Log(rb2D.position);
+        // Debug.Log(rb2D.position);
+        audioSource.PlayOneShot(ShootAudio);
         GameObject arrow = Instantiate(arrowPrefab, transform.position, Quaternion.identity);
         if (FacingDirection == -1)
         {
@@ -270,6 +283,7 @@ public class Player : Entity
     private void StartDead()
     {
         EndShoot();
+        audioSource.PlayOneShot(HurtAudio);
         Debug.Log("dead");
         isDead = true;
         animator.SetBool("dead", true);
@@ -355,12 +369,16 @@ public class Player : Entity
     private void SetUseInputFalse() => playerInputHandler.SetUseInput(false);
     private void EnablePlayerInput() => playerInput.enabled = true;
     private void DisablePlayerInput() => playerInput.enabled = false;
+    private void PlayCoinAudio() => audioSource.PlayOneShot(CoinAudio);
+    private void PlayBuffAudio() => audioSource.PlayOneShot(BuffAudio);
 
     private void SubscribeEvent()
     {
         GameEventManager.Instance.CallEvaluationUI += SetUseInputFalse;
         GameEventManager.Instance.DisablePlayerInput += DisablePlayerInput;
         GameEventManager.Instance.EnablePlayerInput += EnablePlayerInput;
+        GameEventManager.Instance.PlayCoinAudio += PlayCoinAudio;
+        GameEventManager.Instance.PlayBuffAudio += PlayBuffAudio;
     }
 
     private void DesubscribeEvent()
@@ -368,6 +386,8 @@ public class Player : Entity
         GameEventManager.Instance.CallEvaluationUI -= SetUseInputFalse;
         GameEventManager.Instance.DisablePlayerInput -= DisablePlayerInput;
         GameEventManager.Instance.EnablePlayerInput -= EnablePlayerInput;
+        GameEventManager.Instance.PlayCoinAudio -= PlayCoinAudio;
+        GameEventManager.Instance.PlayBuffAudio -= PlayBuffAudio;
     }
 
     #endregion
