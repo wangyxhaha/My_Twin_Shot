@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
-    [SerializeField]
     private Transform mainCam;
     private Vector3 workspace;
 
     void Start()
     {
-        ;
+        mainCam = GameObject.Find("Main Camera").transform;
     }
 
     void Update()
     {
-        transform.position = mainCam.position;
-        float tmp = mainCam.gameObject.GetComponent<Camera>().orthographicSize / GetComponent<SpriteRenderer>().sprite.bounds.size.y;
+        workspace = mainCam.position;
+        workspace.z = 0f;
+        transform.position = workspace;
+        float tmp = mainCam.gameObject.GetComponent<Camera>().orthographicSize * 2f / GetComponent<SpriteRenderer>().sprite.bounds.size.y;
         workspace.Set(tmp, tmp, tmp);
         transform.localScale = workspace;
     }

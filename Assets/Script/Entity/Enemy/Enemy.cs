@@ -1,0 +1,60 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class Enemy : Entity
+{
+    public Animator animator { get; protected set; }
+    public Rigidbody2D rb2D { get; protected set; }
+    public CapsuleCollider2D capsuleCollider2D { get; protected set; }
+    private Recorder recorder;
+    protected int FacingDirection;
+    protected ContactFilter2D arrowFilter;
+    protected bool isDead = false;
+    [SerializeField]
+    private GameObject[] goods;
+
+    private void foo()
+    {
+        isDead = true;
+        Destroy(gameObject);
+    }
+
+    public virtual void Awake()
+    {
+        GameEventManager.Instance.KillAllEnemy += foo;
+
+        recorder = GameObject.Find("Recorder").GetComponent<Recorder>();
+        recorder.CurrentEnemyCount++;
+    }
+
+    public virtual void OnDestroy()
+    {
+        GameEventManager.Instance.KillAllEnemy -= foo;
+        recorder.CurrentEnemyCount--;
+        if (isDead) recorder.CheckEnemyCount();
+    }
+
+    protected void Flip()
+    {
+        FacingDirection *= -1;
+        transform.Rotate(0f, 180f, 0f);
+    }
+
+    public abstract void OnDead(int _direction);
+    protected void SetVelocityX(float _velocity)
+    {
+        workspace.Set(_velocity, rb2D.velocity.y);
+        rb2D.velocity = workspace;
+    }
+    protected void SetVelocityY(float _velocity)
+    {
+        workspace.Set(rb2D.velocity.x, _velocity);
+        rb2D.velocity = workspace;
+    }
+
+    protected void DropGoods()
+    {
+        Instantiate(goods[Random.Range(0, goods.Length)], transform.position, Quaternion.identity);
+    }
+}

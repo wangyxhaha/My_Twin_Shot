@@ -9,6 +9,7 @@ public class PlayerInputHandler : MonoBehaviour
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
+    public bool JumpInputContinuously { get; private set; }
     public bool ShootInput { get; private set; }
     [SerializeField]
     private float inputHoldTime = 0.2f;
@@ -35,6 +36,14 @@ public class PlayerInputHandler : MonoBehaviour
             JumpInput = true;
             jumpInputStartTime = Time.time;
         }
+        if (context.performed)
+        {
+            JumpInputContinuously = true;
+        }
+        if (context.canceled)
+        {
+            JumpInputContinuously = false;
+        }
     }
     public void OnShootInput(InputAction.CallbackContext context)
     {
@@ -45,6 +54,22 @@ public class PlayerInputHandler : MonoBehaviour
             shootInputStartTime = Time.time;
         }
     }
+    public void OnCheat(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GameEventManager.Instance.KillAllEnemyInvoke();
+        }
+    }
+
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GameEventManager.Instance.CallPauseLevelInvoke();
+        }
+    }
+
     public void UseJumpInput() => JumpInput = false;
     public void UseShootInput() => ShootInput = false;
     private void CheckJumpHoldTime()
@@ -64,5 +89,15 @@ public class PlayerInputHandler : MonoBehaviour
     public void SetUseInput(bool _a)
     {
         useInput = _a;
+
+        if (!_a)
+        {
+            RawMovementInput = Vector2.zero;
+            NormInputX = 0;
+            NormInputY = 0;
+            JumpInput = false;
+            JumpInputContinuously = false;
+            ShootInput = false;
+        }
     }
 }

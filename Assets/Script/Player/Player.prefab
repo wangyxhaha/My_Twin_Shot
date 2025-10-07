@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 1b85ee4cb8833f14089cd145b9b7e8a2, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 6be2be9a14286504680fefddabb984cb, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -195,6 +195,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 60b65d73-4313-4432-b50a-987b1ce1bf48
     m_ActionName: Gameplay/Shot[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1030002829163157433}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnCheat
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 84958400-4acc-403e-b7c7-542e54b2afb2
+    m_ActionName: Gameplay/Cheat
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1030002829163157433}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 0e95abb0-1965-4b46-b9eb-485a5883002f
+    m_ActionName: Gameplay/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay
@@ -277,6 +309,11 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 80470d14060caa049ba5ed1682c82f8e, type: 2}
   arrowPrefab: {fileID: 707277691273121622, guid: 8d5634b510ff97a43bf0cfb2ebc58d00, type: 3}
   score: 0
+  isFlyBuff: 0
+  isGodBuff: 0
+  fasterVelocityScale: 2
+  maxMovementVelocity: 0
+  maxInAirVelocity: 0
   groundDetector: {fileID: 3836143443649511503}
 --- !u!70 &1310226547521513778
 CapsuleCollider2D:

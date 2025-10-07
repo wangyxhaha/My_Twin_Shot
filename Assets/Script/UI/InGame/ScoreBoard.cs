@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreBoard : MonoBehaviour
+public class ScoreBoard : InGameUIBase
 {
-    private GameObject player;
     public Text text{ get; private set; }
     void Start()
     {
-        player = GameObject.Find("Player");
-        text = GetComponent<Text>();
+        text = transform.GetChild(0).GetComponent<Text>();
     }
 
     void Update()

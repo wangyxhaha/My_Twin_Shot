@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Buff : MonoBehaviour
+public class Buff : InGameUIBase
 {
-    private Player player;
     [SerializeField]
     private Sprite[] sprites;
     public Image image{ get; private set; }
@@ -14,7 +13,6 @@ public class Buff : MonoBehaviour
     void Start()
     {
         image = GetComponent<Image>();
-        player = GameObject.Find("Player").GetComponent<Player>();
 
         transparent = Color.white;
         transparent.a = 0f;

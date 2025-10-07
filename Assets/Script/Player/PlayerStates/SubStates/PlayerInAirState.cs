@@ -20,7 +20,7 @@ public class PlayerInAirState : PlayerState
     {
         base.Enter();
 
-        player.animator.SetFloat("velocityY",player.currentVelocity.y > 0 ? 1f : -1f);
+        player.animator.SetFloat("velocityY", player.currentVelocity.y > 0 ? 1f : -1f);
     }
     public override void Exit()
     {
@@ -41,16 +41,27 @@ public class PlayerInAirState : PlayerState
         {
             player.CheckIfShouldFlip(inputX);
 
-            player.animator.SetFloat("velocityY",player.currentVelocity.y > 0 ? 1f : -1f);
+            if (CanFly())
+            {
+                player.animator.SetFloat("velocityY", 2f);
+            }
+            else
+            {
+                player.animator.SetFloat("velocityY", player.currentVelocity.y > 0 ? 1f : -1f);
+            }
 
-            if ((inputX > 0 && player.currentVelocity.x < player.maxInAirVelocity)
-             || (inputX < 0 && player.currentVelocity.x > -player.maxInAirVelocity))
+            if ((inputX > 0 && player.currentVelocity.x < player.maxInAirVelocity) || (inputX < 0 && player.currentVelocity.x > -player.maxInAirVelocity))
             {
                 player.SetAccelerationX(playerData.inAirAcceleration * inputX);
             }
             else
             {
                 player.SetAccelerationX(0f);
+            }
+
+            if (CanFly() && player.playerInputHandler.JumpInputContinuously && player.currentVelocity.y < player.maxInAirVelocity)
+            {
+                player.SetAccelerationY(playerData.flyingAcceleration);
             }
         }
     }
@@ -72,5 +83,10 @@ public class PlayerInAirState : PlayerState
                 player.SetAccelerationX(-(Vector2.right * player.currentVelocity.x).normalized.x * playerData.idleStoppingAcceleration);
             }
         }
+    }
+
+    private bool CanFly()
+    {
+        return !player.isDead && player.isFlyBuff && Time.time - startTime > playerData.timeCantFly;
     }
 }

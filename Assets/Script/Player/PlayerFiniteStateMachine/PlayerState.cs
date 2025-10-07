@@ -25,7 +25,7 @@ public class PlayerState
         DoCheck();
         player.animator.SetBool(animeBoolName, true);
         startTime = Time.time;
-        Debug.Log(animeBoolName);
+        // Debug.Log(animeBoolName);
     }
 
     public virtual void Exit()

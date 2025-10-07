@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
@@ -22,6 +23,7 @@ public class Player : Entity
     public Rigidbody2D rb2D { get; private set; }
     public SpriteRenderer spriteRenderer { get; private set; }
     public CapsuleCollider2D capsuleCollider2D { get; private set; }
+    public PlayerInput playerInput { get; private set; }
     #endregion
     #region Other Variables
     private int FacingDirection;
@@ -38,7 +40,7 @@ public class Player : Entity
     [SerializeField]
     private GameObject arrowPrefab;
     private int lifeCount;
-    private bool isDead;
+    public bool isDead { get; private set; }
     private bool isReincarnating;
     private float? reincarnationTimer;
     private Color colorWorkspace;
@@ -92,6 +94,7 @@ public class Player : Entity
         rb2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        playerInput = GetComponent<PlayerInput>();
 
         shootLayerIndex = animator.GetLayerIndex("Shoot Layer");
         deadLayerIndex = animator.GetLayerIndex("Dead Layer");
@@ -111,6 +114,17 @@ public class Player : Entity
         ClearBuff();
 
         InitializeFakeFigure();
+
+        SubscribeEvent();
+
+        GameEventManager.Instance.CallLevelOnLoadInvoke();
+    }
+
+    private void OnDestroy()
+    {
+        GameEventManager.Instance.CallLevelOnDestroyInvoke();
+
+        DesubscribeEvent();
     }
 
     public void Update()
@@ -136,10 +150,8 @@ public class Player : Entity
         CheckItem();
     }
 
-    public override void FixedUpdate()
+    public void FixedUpdate()
     {
-        base.FixedUpdate();
-
         RefreshBuff();
 
         currentVelocity = rb2D.velocity;
@@ -149,6 +161,8 @@ public class Player : Entity
         playerStateMachine.currentState.PhysicsUpdate();
         if (isFasterBuff) FasterBuff();
         UseAcceleration();
+
+        FakeFigureUpdate();
     }
     #endregion
     #region Set Functions
@@ -336,6 +350,28 @@ public class Player : Entity
     }
 
     #endregion
+    #region Event Functions
+
+    private void SetUseInputFalse() => playerInputHandler.SetUseInput(false);
+    private void EnablePlayerInput() => playerInput.enabled = true;
+    private void DisablePlayerInput() => playerInput.enabled = false;
+
+    private void SubscribeEvent()
+    {
+        GameEventManager.Instance.CallEvaluationUI += SetUseInputFalse;
+        GameEventManager.Instance.DisablePlayerInput += DisablePlayerInput;
+        GameEventManager.Instance.EnablePlayerInput += EnablePlayerInput;
+    }
+
+    private void DesubscribeEvent()
+    {
+        GameEventManager.Instance.CallEvaluationUI -= SetUseInputFalse;
+        GameEventManager.Instance.DisablePlayerInput -= DisablePlayerInput;
+        GameEventManager.Instance.EnablePlayerInput -= EnablePlayerInput;
+    }
+
+    #endregion
+
     #region Gizmos Functions
     public void OnDrawGizmos()
     {

@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Life : MonoBehaviour
+public class Life : InGameUIBase
 {
-    private GameObject player;
     [SerializeField]
     private Sprite[] sprites;
     public Image image{ get; private set; }
     void Start()
     {
         image = GetComponent<Image>();
-        player = GameObject.Find("Player");
     }
 
     void Update()

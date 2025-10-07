@@ -15,6 +15,8 @@ public class PlayerData : ScriptableObject
     [Header("In Air State")]
     public float maxInAirVelocity = 10f;
     public float inAirAcceleration = 30f;
+    public float flyingAcceleration = 20f;
+    public float timeCantFly = 0.7f;
 
     [Header("Jump State")]
     public float jumpVelocity = 7f;
